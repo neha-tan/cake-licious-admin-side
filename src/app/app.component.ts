@@ -1,10 +1,140 @@
-import { Component } from '@angular/core';
-
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import {CategoryService} from 'src/app/services/category.service';
+import {ProductService} from 'src/app/services/product.service';
+import {HttpClient} from '@angular/common/http';
+import { OcclistComponent } from './occlist/occlist.component';
+import { AdminService } from './services/admin.service';
+import { Router,ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  @ViewChild("myDiv")
+  myDiv:ElementRef | undefined;
+  prodImages:any;
+  category='';
+  prodName='';
+  prodImage1='';
+  prodImage2='';
+  prodImage3='';
+  prodImage4='';
+  discount='';
+  prodDescription='';
+  prodPrice='';
+  flavour='';
+  categoryList:any;
+  catImage:any;
+ catName:any;
+ categoryId='';
+ occasionList:any;
   title = 'admindashboard';
+
+constructor(private api:CategoryService, private prodApi:ProductService, private _http:HttpClient, private apiOcc:AdminService,private _router:Router,private activateRoute:ActivatedRoute){}
+
+ngOnInit(): void {
+  this.api.getCategoryList().subscribe(data=>{
+    if(data.error){
+      alert('Something went wrong');
+    }
+    else{
+      // console.log(data);
+      this.categoryList=data;
+      console.log(data);
+    }
+  });
+
+  this.apiOcc.getOccasionList().subscribe(data=>{
+    if(data.error){
+      alert('Something went wrong');
+    }
+    else{
+      // console.log(data);
+      this.occasionList=data;
+      console.log(data);
+    }
+  });
+}
+  public show(wrapper:any){
+    wrapper.classList.toggle("toggled");
+}
+
+
+addCategory(){
+  alert(this.myDiv?.nativeElement.value)
+  const formData = new FormData();
+  formData.append("categoryId",this.myDiv?.nativeElement.value)
+  formData.append("occassionId",this.myDiv?.nativeElement.value)
+  formData.append("catImage",this.catImage);
+  formData.append("catName",this.catName);
+  this.api.addcategory(formData).subscribe(data=>{
+    if(data){
+      alert('category added.....')
+        }else{
+          alert('not added')
+
+        }
+
+  })
+}
+selectCatImage(event:any){
+  if(event.target.files.length > 0){
+    const file = event.target.files[0];
+    this.catImage = file;
+  }
+}
+
+formData = new FormData();
+
+
+
+addProd(){
+  // alert(this.myDiv?.nativeElement.value)
+  this.formData.append("categoryId",this.myDiv?.nativeElement.value);
+  this.formData.append("occassionId",this.myDiv?.nativeElement.value)
+  this.formData.append("prodName",this.prodName);
+  this.formData.append("prodPrice",this.prodPrice);
+  this.formData.append("flavour",this.flavour);
+  this.formData.append("discount",this.discount);
+  this.formData.append("prodDescription",this.prodDescription);
+
+
+  console.log(this.formData)
+  this.prodApi.addProduct(this.formData).subscribe(data=>{
+  // console.log(data);
+    if(data){
+
+      alert('product added.....')
+        }else{
+          alert('not added')
+
+        }
+
+  })
+
+}
+
+selectProdImage(event:any){
+  if(event.target.files.length > 0){
+    const files:FileList = event.target.files;
+    for(let index=0;index<files.length;index++){
+      let element = files[index];
+      this.formData.append("prodImages",element);
+
+
+    }
+
+  }
+}
+public searchProduct(event:any){
+  let searchText = event.target.value;
+  this._router.navigate(['/search-product',searchText],{relativeTo: this.activateRoute});
+}
+
+public signout(){
+  localStorage.removeItem('jwt-token');
+  this._router.navigate(['signin']);
+}
+
 }
