@@ -16,6 +16,7 @@ import {ProductByCategoryComponent} from './product-by-category/product-by-categ
 import { QueryComponent } from './query/query.component';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { SearchProductComponent } from './search-product/search-product.component';
+import { FlavourComponent } from './flavour/flavour.component';
 
 const routes: Routes = [
   {path:"",component:DashboardComponent},
@@ -32,7 +33,8 @@ const routes: Routes = [
   {path:"productByCategory/:id",component:ProductByCategoryComponent},
   {path:"queryList",component:QueryComponent},
   {path:"feedbackList",component:FeedbackComponent},
-  {path:"search-product/:text",component:SearchProductComponent}
+  {path:"search-product/:text",component:SearchProductComponent},
+  {path:"flavor",component:FlavourComponent}
 
 ];
 

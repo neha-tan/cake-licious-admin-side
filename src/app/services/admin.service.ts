@@ -27,7 +27,10 @@ export class AdminService {
      return !!localStorage.getItem('jwt-token');
    }
 
-
+   addOccassion(formData:FormData){
+    var api = "http://localhost:3000/occassion/addOccassion";
+    return this._http.post(api,formData);
+  }
 
 
   public getOccasionList():Observable<any>{

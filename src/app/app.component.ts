@@ -5,6 +5,8 @@ import {HttpClient} from '@angular/common/http';
 import { OcclistComponent } from './occlist/occlist.component';
 import { AdminService } from './services/admin.service';
 import { Router,ActivatedRoute } from '@angular/router';
+import { FlavourService } from './services/flavour.service';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -13,6 +15,9 @@ import { Router,ActivatedRoute } from '@angular/router';
 export class AppComponent {
   @ViewChild("myDiv")
   myDiv:ElementRef | undefined;
+  occName='';
+  occDescription='';
+  occImages:any;
   prodImages:any;
   category='';
   prodName='';
@@ -29,9 +34,11 @@ export class AppComponent {
  catName:any;
  categoryId='';
  occasionList:any;
+ flavourList:any;
+ occBanner="";
   title = 'admindashboard';
 
-constructor(private api:CategoryService, private prodApi:ProductService, private _http:HttpClient, private apiOcc:AdminService,private _router:Router,private activateRoute:ActivatedRoute){}
+constructor(private api:CategoryService, private prodApi:ProductService, private apiflavour:FlavourService, private apiOcc:AdminService,private _router:Router,private activateRoute:ActivatedRoute){}
 
 ngOnInit(): void {
   this.api.getCategoryList().subscribe(data=>{
@@ -55,7 +62,20 @@ ngOnInit(): void {
       console.log(data);
     }
   });
+  this.apiflavour.getFlavourList().subscribe(data=>{
+    if(data.error){
+      alert('Something went wrong');
+    }
+    else{
+      // console.log(data);
+      this.flavourList=data;
+      console.log(data);
+    }
+  });
+
 }
+
+
   public show(wrapper:any){
     wrapper.classList.toggle("toggled");
 }
@@ -64,8 +84,6 @@ ngOnInit(): void {
 addCategory(){
   alert(this.myDiv?.nativeElement.value)
   const formData = new FormData();
-  formData.append("categoryId",this.myDiv?.nativeElement.value)
-  formData.append("occassionId",this.myDiv?.nativeElement.value)
   formData.append("catImage",this.catImage);
   formData.append("catName",this.catName);
   this.api.addcategory(formData).subscribe(data=>{
@@ -92,7 +110,8 @@ formData = new FormData();
 addProd(){
   // alert(this.myDiv?.nativeElement.value)
   this.formData.append("categoryId",this.myDiv?.nativeElement.value);
-  this.formData.append("occassionId",this.myDiv?.nativeElement.value)
+  this.formData.append("occassionId",this.myDiv?.nativeElement.value);
+  this.formData.append("flavourId",this.myDiv?.nativeElement.value)
   this.formData.append("prodName",this.prodName);
   this.formData.append("prodPrice",this.prodPrice);
   this.formData.append("flavour",this.flavour);
@@ -113,6 +132,35 @@ addProd(){
 
   })
 
+}
+
+addOcc(){
+  this.formData.append("occName",this.occName);
+  this.formData.append("occDescription",this.occDescription);
+  this.formData.append("occBanner",this.occBanner);
+  console.log(this.formData)
+  this.apiOcc.addOccassion(this.formData).subscribe(data=>{
+    if(data){
+
+      alert('Occassion added.....')
+        }else{
+          alert('not added')
+
+        }
+
+  })
+
+}
+selectOccImage(event:any){
+  if(event.target.files.length > 0){
+    const files:FileList = event.target.files;
+    for(let index=0;index<files.length;index++){
+      let element = files[index];
+      this.formData.append("occImages",element);
+
+
+    }
+  }
 }
 
 selectProdImage(event:any){

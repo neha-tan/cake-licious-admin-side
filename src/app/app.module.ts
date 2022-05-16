@@ -26,6 +26,7 @@ import { QueryComponent } from './query/query.component';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { SearchProductComponent } from './search-product/search-product.component';
 import { CacheService } from './interceptor/cache.service';
+import { FlavourComponent } from './flavour/flavour.component';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import { CacheService } from './interceptor/cache.service';
     ProductByCategoryComponent,
     QueryComponent,
     FeedbackComponent,
-    SearchProductComponent
+    SearchProductComponent,
+    FlavourComponent
   ],
   imports: [
     BrowserModule,
