@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import {CategoryService} from 'src/app/services/category.service';
 import {ProductService} from 'src/app/services/product.service';
+import { ToastrService } from 'ngx-toastr';
 import {HttpClient} from '@angular/common/http';
 import { OcclistComponent } from './occlist/occlist.component';
 import { AdminService } from './services/admin.service';
@@ -14,10 +15,13 @@ import { FlavourService } from './services/flavour.service';
 })
 export class AppComponent {
 
-  @ViewChild("catDiv")
-  catDiv:ElementRef | undefined;
-  occDiv:ElementRef | undefined;
-  flavourDiv:ElementRef | undefined;
+  @ViewChild("catDiv")catId :ElementRef|undefined;
+  @ViewChild("occDiv")ocId :ElementRef|undefined;
+
+  @ViewChild("flavourDiv")favId :ElementRef|undefined;
+
+
+
   occName='';
   occDescription='';
   occImages:any;
@@ -41,7 +45,7 @@ export class AppComponent {
  occBanner="";
   title = 'admindashboard';
 
-constructor(private api:CategoryService, private prodApi:ProductService, private apiflavour:FlavourService, private apiOcc:AdminService,private _router:Router,private activateRoute:ActivatedRoute){}
+constructor(private toastr:ToastrService,private api:CategoryService, private prodApi:ProductService, private apiflavour:FlavourService, private apiOcc:AdminService,private _router:Router,private activateRoute:ActivatedRoute){}
 
 ngOnInit(): void {
   this.api.getCategoryList().subscribe(data=>{
@@ -77,7 +81,7 @@ ngOnInit(): void {
       console.log(data);
     }
   });
-  
+
 
 
 }
@@ -89,16 +93,16 @@ ngOnInit(): void {
 
 
 addCategory(){
- 
+
   const formData = new FormData();
 
   formData.append("catImage",this.catImage);
   formData.append("catName",this.catName);
   this.api.addcategory(formData).subscribe(data=>{
     if(data){
-      alert('category added.....')
+     this.toastr.success("Category Added")
         }else{
-          alert('not added')
+          this.toastr.error("not Added")
 
         }
 
@@ -117,9 +121,9 @@ formData = new FormData();
 
 addProd(){
   // alert(this.myDiv?.nativeElement.value)
-  this.formData.append("categoryId",this.catDiv?.nativeElement.value);
-  this.formData.append("occassionId",this.occDiv?.nativeElement.value);
-  this.formData.append("flavourId",this.flavourDiv?.nativeElement.value)
+  this.formData.append("categoryId",this.catId?.nativeElement.value);
+  this.formData.append("occassionId",this.ocId?.nativeElement.value);
+  this.formData.append("flavourId",this.favId?.nativeElement.value)
   this.formData.append("prodName",this.prodName);
   this.formData.append("prodPrice",this.prodPrice);
   this.formData.append("flavour",this.flavour);
@@ -131,7 +135,7 @@ addProd(){
   this.prodApi.addProduct(this.formData).subscribe(data=>{
   // console.log(data);
     if(data){
-
+console.log(data);
       alert('product added.....')
         }else{
           alert('not added')
@@ -143,7 +147,7 @@ addProd(){
 }
 
 addOcc(){
-  this.formData.append("occassionId",this.occDiv?.nativeElement.value)
+  this.formData.append("occassionId",this.ocId?.nativeElement.value)
   this.formData.append("occName",this.occName);
   this.formData.append("occDescription",this.occDescription);
   this.formData.append("occBanner",this.occBanner);
@@ -191,6 +195,7 @@ public searchProduct(event:any){
 
 public signout(){
   localStorage.removeItem('jwt-token');
+  this.toastr.success("Sign out")
   this._router.navigate(['signin']);
 }
 

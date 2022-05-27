@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class CustomerService {
    api = "http://localhost:3000/order-admin/singleViewOrder";
+
   constructor(private _http:HttpClient) { }
   getCustomerList():Observable<any>{
     var api = "http://localhost:3000/customerList/viewCustomer";

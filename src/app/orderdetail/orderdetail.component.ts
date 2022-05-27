@@ -39,7 +39,15 @@ console.log(err);
 
   public counts = ["Procesing","OutFoodDelivery","Placed",
   "Delivered"];
-  public orderStatus = "OutFoodDelivery"
+  public orderStatus:any;
+
+  getVal(v:any){
+           console.log(v.target.value);
+           this.orderStatus = v.target.value;
+           console.log(this.orderStatus)
+  }
+
+
 }
 
 

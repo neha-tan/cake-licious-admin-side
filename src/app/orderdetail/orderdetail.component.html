@@ -228,7 +228,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <select id="Status">
+        <select id="Status" (change)="getVal($event)">
           <option value="Procesing">Procesing</option>
           <option value="OutFoodDelivery">OutFoodDelivery</option>
           <option value="Placed" selected>Placed</option>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AdminService } from '../services/admin.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-signin',
@@ -10,13 +11,13 @@ import { AdminService } from '../services/admin.service';
 export class SigninComponent implements OnInit {
 password="";
 email="";
-  constructor(private _admin:AdminService,private _router:Router) { }
+  constructor(private _admin:AdminService,private _router:Router,private toastr:ToastrService) { }
   public signin(){
-    alert("email : " + this.email+this.password );
+
     this._admin.signinuser(this.email,this.password).subscribe(data=>{
         console.log(data)
       if(data.status=="login success"){
-        alert("Logged in"+ data.token)
+        this.toastr.success('Login Success', 'WELCOME TO Dashboard');
         sessionStorage.setItem('jwt-token',data.token)
         this._router.navigate(['']);
       }
