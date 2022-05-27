@@ -13,7 +13,7 @@
               </tr>
           </thead>
           <tbody style="color:#f04506;"  >
-              <tr *ngFor="let query of queryList.slice(3,8); index as i">
+              <tr *ngFor="let query of queryList; index as i">
                   <th scope="row">{{i+1}}</th>
                   <td>{{query.customer.name}}</td>
                   <td>{{query.customer.email}}</td>
@@ -48,14 +48,14 @@
           <label for="floatingPassword"></label>
         </div>
         <label class="dvf m-lg-3">Reply</label><br>
-        <textarea rows="3" cols="50" placeholder="Reply" style=" margin-left: 15px" name="comment" form="usrform">
+        <textarea rows="3" cols="50" placeholder="Reply" style=" margin-left: 15px" name="comment" form="usrform" [(ngModel)]="comment">
         </textarea>
 
       </div>
 
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" data-bs-dismiss="modal" class="btn btn-light">Submit</button>
+        <button type="button"  data-bs-dismiss="modal" class="btn btn-light">reply</button>
       </div>
     </div>
   </div>

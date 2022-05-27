@@ -3,6 +3,7 @@ import { ActivatedRoute, NavigationEnd } from '@angular/router';
 import { Router } from '@angular/router';
 import { Category } from '../modal/category';
 import { Product } from '../modal/product';
+import { AdminService } from '../services/admin.service';
 import { ProductService } from '../services/product.service';
 @Component({
   selector: 'app-search-product',
@@ -12,7 +13,8 @@ import { ProductService } from '../services/product.service';
 export class SearchProductComponent implements OnInit {
   productList?:Product[];
   categoryList?:Category[];
-  constructor(private productService:ProductService,private router:Router,private activatedRouter:ActivatedRoute,private _router:Router,private activatedRoute:ActivatedRoute) { }
+  occassionList:any=[];
+  constructor(private productService:ProductService,private router:Router ,private admin:AdminService, private activatedRouter:ActivatedRoute,private _router:Router,private activatedRoute:ActivatedRoute) { }
 
   ngOnInit(): void {
     this.router.events.subscribe(event=>{
@@ -46,9 +48,22 @@ export class SearchProductComponent implements OnInit {
     )
   }
 }
+public getProductOfOccassion(id:string){
+  console.log(id);
+  this.admin.getProductOfOccassion(id)
+  .subscribe(data=>{
+    console.log(data);
+    this.productList = data;
+  },err=>{
+
+      alert('Something went wrong');
+
+  });
+
+}
 public getProductOfCategory(id:string){
   this._router.navigate(['product-by-category',id],{relativeTo:this.activatedRoute})
-} 
+}
    product(){
   this.ngOnInit();
 }

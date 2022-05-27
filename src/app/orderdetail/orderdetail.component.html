@@ -24,30 +24,31 @@
   </tr>
   </thead>
   <tbody  style="color: #f04506;">
-  <tr class="border-bottom" *ngFor="let order of orderList">
+  <tr class="border-bottom">
   <td>
   <div class="p-2">
       <span class="d-block font-weight-bold"></span>
+    1.
   </div>
   </td>
   <td>
-   <div class="p-2 d-flex flex-row align-items-center mb-2">
-      <img src={{orderList.orderedItem.ProductId.prodImage1}} width="40" class="rounded-circle">
-      <div class="d-flex flex-column ml-2">
-          <span class="d-block font-weight-bold">{{order.orderId}}</span>
-          <small class="text-muted"></small>
-      </div>
-  </div>
+<div >
+      <img src= {{orderList.orderedItem[0].ProductId.prodImage1}} width="100" class="rounded-circle">
+
+     <span class="d-block font-weight-bold">{{orderList.orderedItem[0].ProductId.prodName}}</span>
+    </div>
+
+
 
   </td>
   <td>
     <div class="quantity buttons_added">
+      {{orderList.orderedItem[0].Qty}}
     </div>
   </td>
   <td>
   <div class="p-2 d-flex flex-column">
-      <span>1 City point,#2A</span>
-      <span> Brooklyn,NY</span>
+{{orderList.total}}
   </div>
   </td>
 
@@ -82,18 +83,17 @@
     <tbody  style="color: #f04506;">
     <tr class="border-bottom">
     <td>
-    <div class="p-2">
-        <span class="d-block font-weight-bold">Tomorrow</span>
-        <small>2:30PM</small>
-    </div>
-    </td>
-    <td>
+
+     {{orderList.alterMobile}}
 
     </td>
     <td>
-    <div class="p-2">
+      {{orderList.orderId}}
+    </td>
+    <td>
 
-    </div>
+    {{orderList.paymentMethod}}
+
     </td>
 
     </tr>
@@ -131,17 +131,17 @@
   <tr class="border-bottom">
   <td>
   <div class="p-2">
-
+{{orderList.customer.name}}
   </div>
   </td>
   <td>
     <div class="p-2">
-
+      {{orderList.customer.email}}
     </div>
   </td>
   <td>
   <div class="p-2">
-
+    {{orderList.customer.mobile}}
   </div>
   </td>
 
@@ -156,6 +156,8 @@
 
 
 
+
+
 <h3>{{ name}}</h3>
 
  <div class="container">
@@ -165,11 +167,6 @@
    <span class="bar" *ngIf="(i != counts.length-1)"></span>
  </span>
  </div>
-
-
-
-
-
 
 <style>
   .button {

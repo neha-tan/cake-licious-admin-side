@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
 import { Observable } from 'rxjs';
+import { Product } from '../modal/product';
 
 // import { HttpClientJsonpModule } from '@angular/common/http';
 
@@ -10,6 +11,7 @@ import { Observable } from 'rxjs';
 })
 
 export class AdminService {
+  private productOfOccassionApi = "http://localhost:3000/admin-product/occassion-product";
 
   signinAPI = "http://localhost:3000/admin/signin";
 
@@ -38,7 +40,9 @@ export class AdminService {
     return this._http.get(api);
   }
 
-
+  public getProductOfOccassion(oid:string):Observable<Product[]>{
+    return this._http.get<Product[]>(this.productOfOccassionApi+"/"+oid);
+  }
 
 
 

@@ -11,7 +11,10 @@ export class QueryComponent implements OnInit {
 
   queryid="";
   query='';
+  email:any;
+  comment:any;
   constructor(private api:CustomerService) { }
+
 
   ngOnInit(): void {
     this.api.getQueryList().subscribe(data=>{
@@ -19,7 +22,7 @@ export class QueryComponent implements OnInit {
         alert('Something went wrong');
       }
       else{
-        // console.log(data);
+      console.log(data);
         this.queryList=data;
       }
     });
@@ -28,6 +31,8 @@ export class QueryComponent implements OnInit {
   q(data:any){
     this.query=data.query;
     this.queryid=data._id;
+    this.email = data.customer.email
+    console.log(this.email)
 
   }
 }

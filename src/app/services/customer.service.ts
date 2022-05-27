@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class CustomerService {
-
+   api = "http://localhost:3000/order-admin/singleViewOrder";
   constructor(private _http:HttpClient) { }
   getCustomerList():Observable<any>{
     var api = "http://localhost:3000/customerList/viewCustomer";
@@ -16,6 +16,9 @@ export class CustomerService {
     var api = "http://localhost:3000/order-admin/viewOrder";
     return this._http.get(api);
   }
+  public getSingleOrder(oId:string):Observable<any>{
+    return this._http.post<any>(this.api,{oId});
+  }
   getQueryList():Observable<any>{
     var api = "http://localhost:3000/support-admin/viewQuery";
     return this._http.get(api);
@@ -24,4 +27,5 @@ export class CustomerService {
     var api = "http://localhost:3000/feedback/viewFeedback";
     return this._http.get(api);
   }
+
 }

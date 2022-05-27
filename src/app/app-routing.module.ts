@@ -27,7 +27,7 @@ const routes: Routes = [
   {path:"catedit",component:CateditComponent},
   {path:"occlist",component:OcclistComponent},
   {path:"customerlist",component:CustomerlistComponent},
-  {path:"order",component:OrderdetailComponent},
+  {path:"order/:id",component:OrderdetailComponent},
   {path:"signin",component:SigninComponent},
   {path:"suggetion",component:SuggetionComponent},
   {path:"productByCategory/:id",component:ProductByCategoryComponent},

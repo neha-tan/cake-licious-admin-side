@@ -30,9 +30,9 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <div  class="collapse navbar-collapse" id="navbarNav"  style="color:#f04506; ">
-    <ul class="navbar-nav" *ngFor="let category of categoryList">
+    <ul class="navbar-nav" *ngFor="let occassion of occassionList">
       <li class="nav-item" >
-        <a class="nav-link active " style="color:#f04506"  aria-current="page" >{{category.catName}}</a>
+        <a class="nav-link active " style="color:#f04506" (click)="getProductOfOccassion(occassion._id)" aria-current="page" >{{occassion.occName}}</a>
       </li>
 
     </ul>

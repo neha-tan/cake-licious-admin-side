@@ -67,7 +67,7 @@
               <h2  class="fs-2 m-0" style="color: #f04506;">Dashboard </h2>
           </div>
           <div class="input-group m-5">
-            <input (keyup)="searchProduct($event)" class="form-control border rounded-pill" type="search" value="search" id="example-search-input" style="color:#f04506;">
+            <input (keyup)="searchProduct($event)" class="form-control border rounded-pill" type="search" placeholder="Search here......" id="example-search-input" style="color:#f04506;">
         </div>
 
 
@@ -103,7 +103,6 @@
 
 
       </div>
-  </div>
 
 
 
@@ -180,18 +179,18 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal"  aria-label="Close"></button>
         </div>
          <label style="margin-left: 50px;">Category</label>
-        <select #myDiv name="categoryId" class="form-control m-auto mb-3" style="width:80%;">
+        <select #catDiv name="categoryId" class="form-control m-auto mb-3" style="width:80%;">
           <option>Select</option>
           <option  *ngFor="let category of categoryList"  value="{{category._id}}" style="width: 50px;" name="cid">{{category.catName}} </option>
        </select>
        <label style="margin-left: 50px;">Occassion</label>
 
-       <select #myDiv name="categoryId" class="form-control m-auto" style="width:80%;">
+       <select #occDiv name="categoryId" class="form-control m-auto" style="width:80%;">
         <option>Select</option>
         <option  *ngFor="let occ of occasionList"  value="{{occ._id}}" name="cid">{{occ.occName}} </option>
      </select>
      <label style="margin-left: 50px; margin-top: 10px;">Flavour</label>
-     <select #myDiv name="flavourId" class="form-control m-auto" style="width:80%;">
+     <select #flavourDiv name="flavourId" class="form-control m-auto" style="width:80%;">
       <option>Select</option>
       <option  *ngFor="let flavour of flavourList"  value="{{flavour._id}}" name="cid">{{flavour.flavourname}} </option>
    </select>
@@ -201,7 +200,7 @@
       </div>
       <div class="form-floating m-3 mt-3 m-auto" style="width:80%">
         <input type="text"[(ngModel)]="prodPrice" class="form-control" name="price" id="floatingImage"placeholder="price">
-        <label for="floatingPassword"> Price</label>
+        <label for="floatingPassword">Price</label>
       </div>
       <div class="form-floating mb-3 m-3 mt-3 m-auto" style="width:80%">
         <input type="text" [(ngModel)]="prodDescription" class="form-control m-auto" name="desc" id="floatingInput" placeholder="Name">

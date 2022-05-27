@@ -13,8 +13,11 @@ import { FlavourService } from './services/flavour.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  @ViewChild("myDiv")
-  myDiv:ElementRef | undefined;
+
+  @ViewChild("catDiv")
+  catDiv:ElementRef | undefined;
+  occDiv:ElementRef | undefined;
+  flavourDiv:ElementRef | undefined;
   occName='';
   occDescription='';
   occImages:any;
@@ -62,6 +65,8 @@ ngOnInit(): void {
       console.log(data);
     }
   });
+
+
   this.apiflavour.getFlavourList().subscribe(data=>{
     if(data.error){
       alert('Something went wrong');
@@ -72,6 +77,8 @@ ngOnInit(): void {
       console.log(data);
     }
   });
+  
+
 
 }
 
@@ -82,8 +89,9 @@ ngOnInit(): void {
 
 
 addCategory(){
-  alert(this.myDiv?.nativeElement.value)
+ 
   const formData = new FormData();
+
   formData.append("catImage",this.catImage);
   formData.append("catName",this.catName);
   this.api.addcategory(formData).subscribe(data=>{
@@ -109,9 +117,9 @@ formData = new FormData();
 
 addProd(){
   // alert(this.myDiv?.nativeElement.value)
-  this.formData.append("categoryId",this.myDiv?.nativeElement.value);
-  this.formData.append("occassionId",this.myDiv?.nativeElement.value);
-  this.formData.append("flavourId",this.myDiv?.nativeElement.value)
+  this.formData.append("categoryId",this.catDiv?.nativeElement.value);
+  this.formData.append("occassionId",this.occDiv?.nativeElement.value);
+  this.formData.append("flavourId",this.flavourDiv?.nativeElement.value)
   this.formData.append("prodName",this.prodName);
   this.formData.append("prodPrice",this.prodPrice);
   this.formData.append("flavour",this.flavour);
@@ -135,6 +143,7 @@ addProd(){
 }
 
 addOcc(){
+  this.formData.append("occassionId",this.occDiv?.nativeElement.value)
   this.formData.append("occName",this.occName);
   this.formData.append("occDescription",this.occDescription);
   this.formData.append("occBanner",this.occBanner);

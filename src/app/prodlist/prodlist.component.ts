@@ -6,6 +6,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Category } from '../modal/category';
 import { CategoryService } from '../services/category.service';
+import { AdminService } from '../services/admin.service';
 
 @Component({
   selector: 'app-prodlist',
@@ -16,7 +17,8 @@ export class ProdlistComponent implements OnInit {
 
   categoryList:Category[]|any;
   productList:any=[];
-  constructor(private api:ProductService,private toaster:ToastrService,private _router:Router,private activatedRoute:ActivatedRoute,private categoryService:CategoryService) { }
+  occassionList:any=[];
+  constructor(private admin:AdminService, private api:ProductService,private toaster:ToastrService,private _router:Router,private activatedRoute:ActivatedRoute,private categoryService:CategoryService) { }
 
 
 
@@ -67,10 +69,32 @@ export class ProdlistComponent implements OnInit {
            this.toaster.error("Intenal Server Error","Error");
        }
     });
+    this.admin.getOccasionList()
+    .subscribe(data=>{
+      this.occassionList = data;
+    },err=>{
+       if(err instanceof HttpErrorResponse){
+         if(err.status == 500)
+           this.toaster.error("Intenal Server Error","Error");
+       }
+    });
  }
       public getProductOfCategory(id:string){
         console.log(id);
         this.api.getProductOfCategory(id)
+        .subscribe(data=>{
+          console.log(data);
+          this.productList = data;
+        },err=>{
+
+            alert('Something went wrong');
+
+        });
+
+      }
+      public getProductOfOccassion(id:string){
+        console.log(id);
+        this.admin.getProductOfOccassion(id)
         .subscribe(data=>{
           console.log(data);
           this.productList = data;

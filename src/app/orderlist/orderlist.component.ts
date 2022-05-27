@@ -9,24 +9,27 @@ import { CustomerService } from '../services/customer.service';
 export class OrderlistComponent implements OnInit {
 orderList:any=[];
 orederid="";
-order="";
+List:any=[];
+
   constructor(private api:CustomerService) { }
 
   ngOnInit(): void {
+
+
     this.api.getorderList().subscribe(data=>{
       if(data.error){
-        alert('Something went wrong');
+        console.log(data.error)
       }
       else{
-        // console.log(data);
+
         this.orderList=data;
+        console.log(data);
       }
     });
-  }
-  q(data:any){
-    this.order=data.query;
-    this.orederid=data._id;
 
   }
+
+
+
 
 }
